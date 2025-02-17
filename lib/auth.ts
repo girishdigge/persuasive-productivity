@@ -32,7 +32,7 @@ export const authOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        name: { label: 'name', type: 'text', placeholder: 'Name' },
+        username: { label: 'username', type: 'text', placeholder: 'Username' },
         email: { label: 'email', type: 'email', placeholder: 'Email' },
         password: {
           label: 'password',
@@ -70,6 +70,8 @@ export const authOptions = {
   callbacks: {
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
+        console.log(token, '--------token------');
+
         session.user = {
           id: token.id,
           name: token.name,
@@ -85,7 +87,7 @@ export const authOptions = {
       });
       if (user) {
         session.user.image = user.image;
-        session.user.name = user.name.toLowerCase();
+        session.user.name = user.name?.toLowerCase();
       }
       return session;
     },
@@ -101,7 +103,7 @@ export const authOptions = {
       }
       return {
         id: dbUser.id,
-        name: dbUser.name,
+        username: dbUser.username,
         email: dbUser.email,
         picture: dbUser.image,
       };
