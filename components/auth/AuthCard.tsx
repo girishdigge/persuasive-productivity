@@ -3,6 +3,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
 import SignUpCardContent from './SignUpCardContent';
+import SignInCardContent from './SignInCardContent';
 
 interface Props {
   signInCard?: boolean;
@@ -27,23 +28,23 @@ const AuthCard = ({ signInCard }: Props) => {
             {signInCard ? t('SIGN_IN.DESC') : t('SIGN_UP.DESC')}
           </CardDescription>
         </CardHeader>
-        <p className='text-sm'>
+        {signInCard ? <SignInCardContent /> : <SignUpCardContent />}
+      </Card>
+      <p className='text-sm'>
+        {' '}
+        {signInCard
+          ? t('SIGN_IN.DONT_HAVE_ACCOUNT.FIRST')
+          : t('SIGN_UP.HAVE_ACCOUNT.FIRST')}{' '}
+        <Link
+          className='text-primary'
+          href={signInCard ? '/sign-up' : '/sign-in'}
+        >
           {' '}
           {signInCard
-            ? t('SIGN_IN.DONT_HAVE_ACCOUNT.FIRST')
-            : t('SIGN_UP.HAVE_ACCOUNT.FIRST')}{' '}
-          <Link
-            className='text-primary'
-            href={signInCard ? '/sign-up' : '/sign-in'}
-          >
-            {' '}
-            {signInCard
-              ? t('SIGN_IN.DONT_HAVE_ACCOUNT.SECOND')
-              : t('SIGN_UP.HAVE_ACCOUNT.SECOND')}{' '}
-          </Link>
-        </p>
-        {signInCard ? <></> : <SignUpCardContent />}
-      </Card>
+            ? t('SIGN_IN.DONT_HAVE_ACCOUNT.SECOND')
+            : t('SIGN_UP.HAVE_ACCOUNT.SECOND')}{' '}
+        </Link>
+      </p>
     </>
   );
 };

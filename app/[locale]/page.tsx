@@ -1,7 +1,10 @@
-import { useTranslations } from 'next-intl';
+import ThemeSwitcher from '@/components/switchers/ThemeSwitcher';
 
 const Home = () => {
-  const t = useTranslations('Index');
-  return <h1>{t('title')}</h1>;
+  return (
+    <div>
+      <ThemeSwitcher />
+    </div>
+  );
 };
 export default Home;

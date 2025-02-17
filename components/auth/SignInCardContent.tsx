@@ -8,32 +8,31 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import { signUpSchema, SignUpSchema } from '@/schema/signUpSchema';
+import { signInSchema, SignInSchema } from '@/schema/signInSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProviderSignInBtns } from './ProviderSignInBtns';
 import { useTranslations } from 'next-intl';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import Link from 'next/link';
-const SignUpCardContent = () => {
+
+const SignInCardContent = () => {
   const t = useTranslations('AUTH');
-  const form = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
-      username: '',
     },
   });
 
-  const onSubmit = async (data: SignUpSchema) => {
+  const onSubmit = async (data: SignInSchema) => {
     console.log(data);
   };
   return (
     <CardContent>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-7'>
-          <ProviderSignInBtns />
+          <ProviderSignInBtns signInCard />
           <div className='space-y-1.5'>
             <FormField
               control={form.control}
@@ -42,18 +41,6 @@ const SignUpCardContent = () => {
                 <FormItem>
                   <FormControl>
                     <Input placeholder={t('EMAIL')} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='username'
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder={t('USERNAME')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -81,13 +68,10 @@ const SignUpCardContent = () => {
               className='w-full font-bold text-white dark:bg-gray-800 dark:hover:bg-gray-700'
               type='submit'
             >
-              {t('SIGN_UP.SUBMIT_BTN')}
+              {t('SIGN_IN.SUBMIT_BTN')}
             </Button>
             <p className='text-sx text-center text-muted-foreground'>
-              {t('SIGN_UP.TERMS.FIRST')}{' '}
-              <Link className='font-bold' href={'/'}>
-                {t('SIGN_UP.TERMS.SECOND')}
-              </Link>
+              {t('SIGN_IN.FORGOT_PASSWORD')}{' '}
             </p>
           </div>
         </form>
@@ -95,4 +79,4 @@ const SignUpCardContent = () => {
     </CardContent>
   );
 };
-export default SignUpCardContent;
+export default SignInCardContent;
